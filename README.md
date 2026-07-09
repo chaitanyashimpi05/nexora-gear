@@ -125,3 +125,5 @@ npx firebase-tools init hosting
 npx firebase-tools deploy
 ```
 Your website is now live! Copy the Hosting URL generated in the terminal.
+
+live - https://nexora-gear.web.app/
