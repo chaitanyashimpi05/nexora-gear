@@ -249,84 +249,84 @@ const Checkout = () => {
           </div>
         </div>
 
-        {/* Right Column: Checkout Summary Details */ }
-  <div className="space-y-6">
-    <div className="glass-card rounded-2xl border border-neutral-900 p-6 space-y-6 sticky top-24">
-      <h2 className="text-lg font-gaming font-extrabold text-white uppercase border-b border-neutral-900 pb-2 flex items-center">
-        <FaShoppingBag className="mr-2 text-gaming-cyan text-sm" />
-        <span>Cart Summary</span>
-      </h2>
+        {/* Right Column: Checkout Summary Details */}
+        <div className="space-y-6">
+          <div className="glass-card rounded-2xl border border-neutral-900 p-6 space-y-6 sticky top-24">
+            <h2 className="text-lg font-gaming font-extrabold text-white uppercase border-b border-neutral-900 pb-2 flex items-center">
+              <FaShoppingBag className="mr-2 text-gaming-cyan text-sm" />
+              <span>Cart Summary</span>
+            </h2>
 
-      {/* Products Thumb list */}
-      <div className="space-y-3 max-h-[220px] overflow-y-auto pr-1">
-        {cart.map((item) => (
-          <div key={item.id} className="flex items-center gap-3 border-b border-neutral-900/60 pb-3 last:border-0 last:pb-0 font-sans text-xs">
-            <img src={item.image} alt="" className="w-10 h-10 object-cover rounded bg-neutral-950 border border-neutral-850" />
-            <div className="flex-1 space-y-0.5 min-w-0">
-              <span className="text-neutral-300 font-medium block truncate pr-1">{item.name}</span>
-              <span className="text-neutral-500 text-xxs font-gaming uppercase tracking-widest">{item.quantity}x @ {formatCurrency(item.price)}</span>
+            {/* Products Thumb list */}
+            <div className="space-y-3 max-h-[220px] overflow-y-auto pr-1">
+              {cart.map((item) => (
+                <div key={item.id} className="flex items-center gap-3 border-b border-neutral-900/60 pb-3 last:border-0 last:pb-0 font-sans text-xs">
+                  <img src={item.image} alt="" className="w-10 h-10 object-cover rounded bg-neutral-950 border border-neutral-850" />
+                  <div className="flex-1 space-y-0.5 min-w-0">
+                    <span className="text-neutral-300 font-medium block truncate pr-1">{item.name}</span>
+                    <span className="text-neutral-500 text-xxs font-gaming uppercase tracking-widest">{item.quantity}x @ {formatCurrency(item.price)}</span>
+                  </div>
+                  <span className="font-gaming font-bold text-white shrink-0">{formatCurrency(item.price * item.quantity)}</span>
+                </div>
+              ))}
             </div>
-            <span className="font-gaming font-bold text-white shrink-0">{formatCurrency(item.price * item.quantity)}</span>
+
+            {/* Calculations summaries */}
+            <div className="space-y-3 font-sans text-sm border-t border-neutral-900 pt-4">
+              <div className="flex justify-between text-neutral-400 text-xs">
+                <span>Subtotal</span>
+                <span className="font-gaming font-medium">{formatCurrency(subtotal)}</span>
+              </div>
+
+              {discount > 0 && (
+                <div className="flex justify-between text-emerald-400 text-xs">
+                  <span>Guild Discount Applied</span>
+                  <span className="font-gaming font-medium">-{formatCurrency(discount)}</span>
+                </div>
+              )}
+
+              <div className="flex justify-between text-neutral-400 text-xs">
+                <span>GST (18% calculated)</span>
+                <span className="font-gaming font-medium">{formatCurrency(gst)}</span>
+              </div>
+
+              <div className="flex justify-between text-neutral-400 text-xs">
+                <span>Shipping Charges</span>
+                <span className="font-gaming font-medium">
+                  {shipping === 0 ? <span className="text-emerald-400 font-bold">FREE</span> : formatCurrency(shipping)}
+                </span>
+              </div>
+
+              <div className="border-t border-neutral-900 pt-4 flex justify-between items-baseline">
+                <span className="font-gaming font-extrabold uppercase text-white tracking-wide">
+                  Deploy Price
+                </span>
+                <span className="text-2xl font-gaming font-black text-gaming-cyan">
+                  {formatCurrency(finalGrandTotal)}
+                </span>
+              </div>
+            </div>
+
+            {/* Confirm Submit */}
+            <Button
+              type="submit"
+              disabled={isProcessing}
+              variant="primary"
+              className="w-full py-4 text-xs font-bold font-gaming uppercase tracking-widest shadow-glow-purple-lg flex items-center justify-center"
+            >
+              <FaLock className="mr-2 text-xxs animate-pulse" />
+              <span>{isProcessing ? "Deploying Order..." : "Confirm & Deploy Order"}</span>
+            </Button>
+
+            <Link
+              to="/cart"
+              className="inline-flex items-center justify-center space-x-2 text-2xs font-gaming font-bold uppercase tracking-wider text-neutral-500 hover:text-gaming-cyan transition-colors w-full text-center"
+            >
+              <FaArrowLeft className="text-3xs" />
+              <span>Return to Locker</span>
+            </Link>
           </div>
-        ))}
-      </div>
-
-      {/* Calculations summaries */}
-      <div className="space-y-3 font-sans text-sm border-t border-neutral-900 pt-4">
-        <div className="flex justify-between text-neutral-400 text-xs">
-          <span>Subtotal</span>
-          <span className="font-gaming font-medium">{formatCurrency(subtotal)}</span>
         </div>
-
-        {discount > 0 && (
-          <div className="flex justify-between text-emerald-400 text-xs">
-            <span>Guild Discount Applied</span>
-            <span className="font-gaming font-medium">-{formatCurrency(discount)}</span>
-          </div>
-        )}
-
-        <div className="flex justify-between text-neutral-400 text-xs">
-          <span>GST (18% calculated)</span>
-          <span className="font-gaming font-medium">{formatCurrency(gst)}</span>
-        </div>
-
-        <div className="flex justify-between text-neutral-400 text-xs">
-          <span>Shipping Charges</span>
-          <span className="font-gaming font-medium">
-            {shipping === 0 ? <span className="text-emerald-400 font-bold">FREE</span> : formatCurrency(shipping)}
-          </span>
-        </div>
-
-        <div className="border-t border-neutral-900 pt-4 flex justify-between items-baseline">
-          <span className="font-gaming font-extrabold uppercase text-white tracking-wide">
-            Deploy Price
-          </span>
-          <span className="text-2xl font-gaming font-black text-gaming-cyan">
-            {formatCurrency(finalGrandTotal)}
-          </span>
-        </div>
-      </div>
-
-      {/* Confirm Submit */}
-      <Button
-        type="submit"
-        disabled={isProcessing}
-        variant="primary"
-        className="w-full py-4 text-xs font-bold font-gaming uppercase tracking-widest shadow-glow-purple-lg flex items-center justify-center"
-      >
-        <FaLock className="mr-2 text-xxs animate-pulse" />
-        <span>{isProcessing ? "Deploying Order..." : "Confirm & Deploy Order"}</span>
-      </Button>
-
-      <Link
-        to="/cart"
-        className="inline-flex items-center justify-center space-x-2 text-2xs font-gaming font-bold uppercase tracking-wider text-neutral-500 hover:text-gaming-cyan transition-colors w-full text-center"
-      >
-        <FaArrowLeft className="text-3xs" />
-        <span>Return to Locker</span>
-      </Link>
-    </div>
-  </div>
       </form >
     </div >
   );
